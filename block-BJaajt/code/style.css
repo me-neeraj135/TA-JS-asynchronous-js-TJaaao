@@ -1,0 +1,112 @@
+* {
+  box-sizing: border-box;
+}
+.container {
+  max-width: 1500px;
+  width: 100%;
+  margin: auto;
+  text-align: center;
+}
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-image: url("https://images.unsplash.com/photo-1655789488528-080e569bd5f0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80");
+  background-repeat: no-repeat;
+  background-position: 100% 100%;
+  background-size: cover;
+}
+h1 {
+  text-transform: capitalize;
+}
+h2 {
+  color: whitesmoke;
+  text-transform: capitalize;
+  font-size: 2rem;
+}
+ul {
+  list-style: none;
+
+  margin: 0;
+  padding: 0;
+}
+li {
+  margin-left: 1rem;
+}
+.font {
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+input {
+  width: 20%;
+  padding: 0.7rem;
+  margin: 1rem auto;
+  border-radius: 0.2rem;
+  border: none;
+  background-color: #30322f;
+  color: whitesmoke;
+  font-size: 1rem;
+}
+.box {
+  text-align: center;
+}
+.githubBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid silver;
+  padding-bottom: 0.5rem;
+}
+.githubUserImage,
+.img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.userName {
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  color: whitesmoke;
+}
+.follow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.followerImg,
+.followingImg {
+  width: 70px;
+  height: 70px;
+  border: 2px solid silver;
+  border-radius: 50%;
+  object-fit: cover;
+}
+/* .catImgBox {
+  padding-top: 0.5rem;
+} */
+.catBox {
+  width: 50%;
+  height: 25rem;
+  margin: auto;
+  border: 2px solid silver;
+  border-radius: 0.2rem;
+}
+.catImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.catBtn {
+  padding: 1rem;
+  text-transform: capitalize;
+  font-weight: 600;
+  background-color: whitesmoke;
+  border: none;
+  outline: none;
+  margin-top: 1rem;
+  border-radius: 0.2rem;
+  box-shadow: 0rem 0rem 0.1rem 0.1rem gray;
+}
