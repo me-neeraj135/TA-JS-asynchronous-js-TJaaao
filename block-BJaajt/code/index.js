@@ -1,79 +1,69 @@
 let input = document.querySelector(`input`);
 let userImg = document.querySelector(`.githubUserImage`);
 let userName = document.querySelector(`.userName`);
-let follower = document.querySelectorAll(`.followerImg`);
-let following = document.querySelectorAll(`.followingImg`);
+let follower = document.querySelector(`.follower`);
+let following = document.querySelector(`.following`);
 let catImg = document.querySelector(`.catImg`);
 let btn = document.querySelector(`button`);
 
-// making request
+// fetching data
 
-let user = new XMLHttpRequest();
-let followers = new XMLHttpRequest();
-let followings = new XMLHttpRequest();
-let cat = new XMLHttpRequest();
-
-function displayUserUI(userData) {
-  userImg.src = userData.avatar_url;
-  userName.innerText = userData.name;
+function fetch(url, successHandler) {
+  let xhr = new XMLHttpRequest();
+  xhr.open(`GET`, url);
+  xhr.onload = () => successHandler(JSON.parse(xhr.response));
+  xhr.onerror = function () {
+    console.error(`something went wrong`);
+  };
+  xhr.send();
 }
 
-function displayFollowerUI(followerData) {
-  follower.forEach((elm, index) => {
-    elm.src = followerData[index].avatar_url;
+// display extra info
+function displayExtraInfo(url, rootElm) {
+  rootElm.innerHTML = ``;
+
+  fetch(url, function (followingList) {
+    let topFive = followingList.slice(0, 5);
+    topFive.forEach(info => {
+      let li = document.createElement(`li`);
+      let image = document.createElement(`img`);
+      image.src = info.avatar_url;
+      image.className = `followerImg`;
+      li.append(image);
+      rootElm.append(li);
+    });
   });
 }
-function displayFollowingUI(followingData) {
-  following.forEach((elm, index) => {
-    elm.src = followingData[index].avatar_url;
-  });
+
+// handling user image and user name
+function handleDisplay(userInfo) {
+  userImg.src = userInfo.avatar_url;
+  userName.innerText = userInfo.name;
+  displayExtraInfo(
+    `https://api.github.com/users/${userInfo.login}/followers`,
+    follower
+  );
+  displayExtraInfo(
+    `https://api.github.com/users/${userInfo.login}/following`,
+    following
+  );
 }
-function handleChange(event) {
-  if (event.keyCode === 13) {
-    user.open(`GET`, `https://api.github.com/users/${event.target.value}`);
-    followers.open(
-      `GET`,
-      `https://api.github.com/users/${event.target.value}/followers`
-    );
-    followings.open(
-      `GET`,
-      `https://api.github.com/users/${event.target.value}/following`
-    );
-    user.onload = function () {
-      let userData = JSON.parse(user.response);
-      displayUserUI(userData);
-      event.target.value = ``;
-    };
-    user.onerror = function () {
-      alert(`something went wrong`);
-    };
-    user.send();
 
-    followers.onload = function () {
-      let followerData = JSON.parse(followers.response);
-      displayFollowerUI(followerData);
-    };
-    followers.onerror = function () {
-      alert(`something went wrong`);
-    };
-    followers.send();
-
-    followings.onload = function () {
-      let followingData = JSON.parse(followings.response);
-      displayFollowingUI(followingData);
-    };
-    followings.onerror = function () {
-      alert(`something went wrong`);
-    };
-    followings.send();
+// handling input user name
+function handleInput(event) {
+  if (event.keyCode === 13 && event.target.value) {
+    let url = `https://api.github.com/users/`;
+    let userName = input.value;
+    fetch(url + userName, handleDisplay);
+    event.target.value = ``;
   }
 }
 
+// random cat image access
+let cat = new XMLHttpRequest();
+let catUrl = `https://api.thecatapi.com/v1/images/search?limit=1&size=full`;
 function changeImage(event) {
-  cat.open(
-    `GET`,
-    `https://api.thecatapi.com/v1/images/search?limit=1&size=full`
-  );
+  cat.open(`GET`, catUrl);
   cat.onload = function () {
     let catData = JSON.parse(cat.response);
     console.log(catData);
@@ -82,5 +72,5 @@ function changeImage(event) {
   cat.send();
 }
 
-input.addEventListener(`keyup`, handleChange);
+input.addEventListener(`keyup`, handleInput);
 btn.addEventListener(`click`, changeImage);
