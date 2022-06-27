@@ -7,17 +7,17 @@ function myFunction() {
   let url = `https://api.unsplash.com/photos/?client_id=YS42_H0p9kPvayh3ke7A5hDkcd1oNtN5Nzm0qESWFuM`;
   let getSearchUrl = query =>
     `https://api.unsplash.com/search/photos?query=${query}&per_page=20;client_id=YS42_H0p9kPvayh3ke7A5hDkcd1oNtN5Nzm0qESWFuM`;
-  function fetch(url, successHandler) {
+  function fetch(url) {
     imageUL.innerHTML = ``;
-    let xhr = new XMLHttpRequest();
-    xhr.open(`GET`, url);
-    xhr.onload = () => successHandler(JSON.parse(xhr.response));
+    return new Promise((resolve, reject) => {
+      let xhr = new XMLHttpRequest();
+      xhr.open(`GET`, url);
+      xhr.onload = () => resolve(JSON.parse(xhr.response));
 
-    xhr.onerror = function () {
-      console.error(`Something went wrong!`);
-    };
+      xhr.onerror = () => reject(`Some went wrong!`);
 
-    xhr.send();
+      xhr.send();
+    });
   }
 
   function createUI(images) {
@@ -30,14 +30,23 @@ function myFunction() {
     });
   }
 
-  fetch(url, createUI);
+  fetch(url)
+    .then(createUI)
+    .catch(error => {
+      alert(`Something went wrong!`);
+    });
 
   function handleSearch(event) {
     let query = event.target.value;
     if (event.keyCode === 13 && event.target.value) {
-      fetch(getSearchUrl(query), searchResult => {
-        createUI(searchResult.results);
-      });
+      fetch(getSearchUrl(query))
+        .then(searchResult => {
+          createUI(searchResult.results);
+          event.target.value = ``;
+        })
+        .catch(error => {
+          alert(`Something went wrong!`);
+        });
     }
   }
 
