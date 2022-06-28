@@ -2,38 +2,65 @@
 
 ```js
 // Your code
+
+let initial = new Promise((resolved, rejected) => {
+  setTimeout(() => resolved(value), 1000);
+}).then(value => {
+  console.log();
+});
 ```
 
 2. Create another promise. Now have it reject with a value of `Rejected Promise!` without using `setTimeout`. Print the contents of the promise after it has been rejected by passing console.log to `.catch`
 
 ```js
 // Your code
+let rejected = new Promise((res, rej) => {
+  rej(100);
+}).catch(error => {
+  console.log(`Something went wrong`);
+});
 ```
 
 3. Create another promise. Now have it reject with a value of `Rejected Promise!` without using `setTimeout`. Print the contents of the promise after it has been rejected by passing console.log to `.catch` and also use `.finally` to log message `Promise Settled!`.
 
 ```js
 // Your code
+let rejected2 = new Promise((res, rej) => {
+  rej(100);
+})
+  .catch(error => console.log(error))
+  .finally(() => {
+    console.log(`Promise Settled`);
+  });
 ```
 
 4. What will be the output of the code below.
 
 ```js
-console.log('A');
+console.log("A");
 
 // Asynchronous code finises in 0 seconds (Callback Queue)
-setTimeout(() => console.log('B'), 0); // callback queue
+setTimeout(() => console.log("B"), 0); // callback queue
 
 // A promise that resolves right away (Microtask Queue)
-Promise.resolve().then(() => console.log('C'));
+Promise.resolve().then(() => console.log("C"));
 
-console.log('D');
+console.log("D");
+
+// output--A D C B
 ```
 
 5. Write a function named `wait` that accepts `time` in ms returns a promise. The promise gets resolved after given time.
 
 ```js
 // Your code
+
+function wait(time) {
+  return new Promise((res, rej) => {
+    setTimeout(() => res(5), time);
+  });
+}
+let data = wait(2000);
 ```
 
 6. Do the following:
@@ -47,6 +74,14 @@ console.log('D');
 
 ```js
 // Your code
+
+Promise.resolve(21)
+  .then(value => value + 10)
+  .then(value => value + 100)
+  .then(value => value > 100)
+  .catch(error => {
+    alert(`something went wrong!`);
+  });
 ```
 
 7. Do the following:
@@ -59,6 +94,8 @@ console.log('D');
 
 ```js
 // Your code
+
+Promise.resolve([`A`]).then(() => value + `` + `B`);
 ```
 
 8. Do the following:
@@ -70,6 +107,9 @@ console.log('D');
 
 ```js
 // Your code
+new Promise((res, rej) => {
+  res(1);
+}).then(value => value + 1);
 ```
 
 9. Do the following:
