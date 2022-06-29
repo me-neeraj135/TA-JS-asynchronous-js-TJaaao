@@ -3,35 +3,31 @@
 ```js
 // Your code
 
-let initial = new Promise((resolved, rejected) => {
-  setTimeout(() => resolved(value), 1000);
-}).then(value => {
-  console.log();
+let promise = new Promise((resolved, rejected) => {
+  setTimeout(() => resolved(`Promise Resolved!`), 1000);
 });
+
+promise.then(console.log);
 ```
 
 2. Create another promise. Now have it reject with a value of `Rejected Promise!` without using `setTimeout`. Print the contents of the promise after it has been rejected by passing console.log to `.catch`
 
 ```js
 // Your code
-let rejected = new Promise((res, rej) => {
-  rej(100);
-}).catch(error => {
-  console.log(`Something went wrong`);
+let promise = new Promise((res, rej) => {
+  rej(`Rejected Promise!`);
 });
+promise.catch(console.log);
 ```
 
 3. Create another promise. Now have it reject with a value of `Rejected Promise!` without using `setTimeout`. Print the contents of the promise after it has been rejected by passing console.log to `.catch` and also use `.finally` to log message `Promise Settled!`.
 
 ```js
 // Your code
-let rejected2 = new Promise((res, rej) => {
-  rej(100);
-})
-  .catch(error => console.log(error))
-  .finally(() => {
-    console.log(`Promise Settled`);
-  });
+let promise = new Promise((res, rej) => {
+  rej(`Rejected Promise!`);
+});
+promise.catch(console.log).finally(() => console.log(`Promise Settled!`));
 ```
 
 4. What will be the output of the code below.
@@ -60,7 +56,7 @@ function wait(time) {
     setTimeout(() => res(5), time);
   });
 }
-let data = wait(2000);
+wait(2000).then(console.log);
 ```
 
 6. Do the following:
@@ -82,6 +78,18 @@ Promise.resolve(21)
   .catch(error => {
     alert(`something went wrong!`);
   });
+
+let promise = new Promise((res, rej) => {
+  res(21);
+})
+  .then(value => value + 10)
+  .then(value => value + 100)
+  .then(value => {
+    if (value > 100) {
+      throw new Error(`Something went wrong!`);
+    }
+  })
+  .catch(console.log);
 ```
 
 7. Do the following:
@@ -95,7 +103,14 @@ Promise.resolve(21)
 ```js
 // Your code
 
-Promise.resolve([`A`]).then(() => value + `` + `B`);
+Promise.resolve([`A`])
+  .then(value => value.concat(`B`))
+  .then(value =>
+    value.reduce((acc, cv, i) => {
+      acc[i] = cv;
+      return acc;
+    }, {})
+  );
 ```
 
 8. Do the following:
@@ -107,9 +122,24 @@ Promise.resolve([`A`]).then(() => value + `` + `B`);
 
 ```js
 // Your code
-new Promise((res, rej) => {
+let first = new Promise((res, rej) => {
   res(1);
-}).then(value => value + 1);
+});
+
+first
+  .then(value => {
+    console.log(value);
+    return 2;
+  })
+  .then(value => {
+    console.log(value);
+
+    return 3;
+  })
+  .then(value => {
+    console.log(value);
+    return 4;
+  });
 ```
 
 9. Do the following:
@@ -121,6 +151,25 @@ new Promise((res, rej) => {
 
 ```js
 // Your code
+
+let first = new Promise((res, rej) => {
+  res(1);
+});
+
+first.then(value => {
+  console.log(value);
+  return 2;
+});
+first.then(value => {
+  console.log(value);
+
+  return 3;
+});
+
+first.then(value => {
+  console.log(value);
+  return 4;
+});
 ```
 
 10. Try to understand the difference between the problem 8 and 9. Write your observation.
@@ -134,4 +183,18 @@ new Promise((res, rej) => {
 
 ```js
 // Your code
+
+let user = new Promise(res => {
+  res(`John`);
+})
+  .then(value => {
+    return Promise.resolve(`Arya`);
+  })
+  .then(value => {
+    console.log(value);
+    return new Promise(res => {
+      setTimeout(() => res(`Bran`), 1000);
+    });
+  })
+  .then(console.log);
 ```
