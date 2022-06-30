@@ -145,7 +145,7 @@ h1 {
   text-transform: capitalize;
   padding: 1rem;
 }
-.sBox {
+.selectBox {
   width: 50%;
   margin: 1rem auto;
 }
@@ -175,8 +175,6 @@ li {
   justify-content: space-between;
 }
 .title {
-  width: 18%;
-  display: inline-block;
   padding: 0.3rem 1rem;
   text-align: center;
   text-transform: uppercase;
@@ -192,11 +190,12 @@ li {
   font-weight: 700;
   margin: 0.5rem 0;
 }
+a {
+  align-self: flex-end;
+}
 .btn {
   font-weight: 600;
   padding: 0.5rem 1rem;
-  width: 7rem;
-  align-self: flex-end;
   background-color: black;
   color: white;
   border: none;
