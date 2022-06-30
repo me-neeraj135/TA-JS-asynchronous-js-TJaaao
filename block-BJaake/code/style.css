@@ -200,4 +200,5 @@ a {
   color: white;
   border: none;
   text-transform: capitalize;
+  cursor: pointer;
 }
