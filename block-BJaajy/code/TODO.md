@@ -11,14 +11,20 @@
 
 ```js
 const one = new Promise((resolve, reject) =>
-  setTimeout(() => resolve('Arya'), 1000)
+  setTimeout(() => resolve("Arya"), 1000)
 );
 const two = new Promise((resolve, reject) =>
-  setTimeout(() => reject(new Error('Whoops!')), 2000)
+  setTimeout(() => reject(new Error("Whoops!")), 2000)
 );
 const three = new Promise((resolve, reject) =>
-  setTimeout(() => resolve('John'), 3000)
+  setTimeout(() => resolve("John"), 3000)
 );
+
+Promise.allSettled([one, two, three]).then(res => {
+  console.log(res);
+});
+
+Promise.all([one, two, three]).then(console.log);
 ```
 
 - What will be the output of the following code snippet? How much time will it take for the promise to resolve?
@@ -26,9 +32,13 @@ const three = new Promise((resolve, reject) =>
 ```js
 Promise.all([
   new Promise((resolve, reject) => {
-    setTimeout(() => resolve('Arya'), 1000);
+    setTimeout(() => resolve("Arya"), 1000);
   }),
-  'Sam',
-  { name: 'John' },
+  "Sam",
+  { name: "John" },
 ]).then(console.log);
+
+
+
+['Arya', 'Sam', {…}]
 ```

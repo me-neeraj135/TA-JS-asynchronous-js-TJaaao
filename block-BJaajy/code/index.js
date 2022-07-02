@@ -1,25 +1,26 @@
-// let one = Promise.resolve(1);
-// let two = Promise.resolve(2);
-// let three = Promise.resolve(3);
-// let four = Promise.resolve(4);
-// let five = Promise.resolve(5);
+let time = [1, 2, 3, 4];
+let timePromise = time.map(
+  second =>
+    new Promise(resolve => {
+      setTimeout(() => {
+        resolve(Math.random());
+      }, second * 1000);
+    })
+);
+Promise.all(timePromise).then(resolve => console.log(resolve));
 
-let one = new Promise((res, rej) => {
-  setTimeout(() => res(`Arya`), 1000);
+let user = [`fabpot`, `andrew`, `taylorotwell`, `egoist`, `HugoGiraudel`];
+
+let userPromise = user.map(name => {
+  return fetch(`https://api.github.com/users/${name}`).then(res => res.json());
 });
 
-let two = new Promise((res, rej) => {
-  setTimeout(() => rej(`Whoops`), 2000);
-});
+Promise.all(userPromise).then(user =>
+  user.forEac(user => console.log(user.followers))
+);
 
-let three = new Promise((res, rej) => {
-  setTimeout(() => res(`John`), 3000);
-});
+let promiseOne = fetch(`https://random.dog/woof.json`).then(res => res.json());
 
-let four = new Promise((res, rej) => {
-  setTimeout(() => res(`Bahubali`), 4000);
-});
+let promiseTwo = fetch(`https://aws.random.cat/meow`).then(res => res.json());
 
-let all = Promise.all([one, two, three, four])
-  .then(res => console.log(res))
-  .catch(error => console.log(error));
+Promise.race([promiseOne, promiseTwo]).then(res => console.log(res));
