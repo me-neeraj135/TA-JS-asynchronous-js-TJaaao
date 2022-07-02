@@ -136,7 +136,7 @@ main {
   width: 70%;
   margin: auto;
 }
-h1 {
+header {
   text-align: center;
   font-size: 2rem;
   font-weight: 900;
@@ -151,21 +151,22 @@ li {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
+  background-color: aliceblue;
 }
-.sourceDiv {
-  width: 7rem;
-  margin-bottom: 0.5rem;
-  text-align: center;
-  padding: 0.5rem 1rem;
-  background-color: cornflowerblue;
-}
+
 .infoDiv {
   width: 67%;
   display: flex;
   flex-direction: column;
+  padding: 0.5rem 0.5rem;
 }
+
 span {
+  padding: 0.5rem;
+
+  text-align: center;
   color: white;
+  background-color: cornflowerblue;
 
   font-weight: 700;
 }
@@ -184,4 +185,41 @@ button {
 p {
   /* color: bisque; */
   font-weight: 600;
+  padding-top: 0.8rem;
+}
+
+@keyframes donut-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.donut {
+  display: inline-block;
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #7983ff;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: donut-spin 2s linear infinite;
+}
+.spinner {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.errElm {
+  text-align: center;
+  position: absolute;
+  top: 10rem;
+  left: 45%;
+  font-size: 1rem;
+  color: red;
 }
