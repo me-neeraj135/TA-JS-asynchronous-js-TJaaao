@@ -7,7 +7,9 @@ let timePromise = time.map(
       }, second * 1000);
     })
 );
-Promise.all(timePromise).then(resolve => console.log(resolve));
+Promise.all(timePromise)
+  .then(resolve => console.log(resolve))
+  .finally(resolve => console.log(resolve));
 
 let user = [`fabpot`, `andrew`, `taylorotwell`, `egoist`, `HugoGiraudel`];
 
