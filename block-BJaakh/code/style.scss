@@ -1,0 +1,54 @@
+@import "./reset";
+
+// custom-style
+
+.container {
+  width: 50%;
+  height: 90vh;
+  margin: 1rem auto;
+  padding: 1rem;
+  border: 2px solid black;
+
+  div {
+    input {
+      width: 100%;
+      padding: 1rem;
+      border-radius: 0.3rem;
+      border: 2px solid blue;
+    }
+  }
+  ul {
+    border: 1px solid rgb(116, 3, 3);
+
+    li {
+      display: flex;
+      background-color: darkslategrey;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem;
+      margin: 0.5rem 0;
+      border: 1px solid;
+      div {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        // width: 15%;
+        font-size: 1.5rem;
+        // border: 1px solid beige;
+        input {
+          margin: 0;
+          width: 20px;
+        }
+        p {
+          font-size: 1rem;
+          margin-left: 1rem;
+        }
+      }
+      .closeBtn {
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
