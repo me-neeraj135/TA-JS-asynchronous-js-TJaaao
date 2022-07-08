@@ -4,87 +4,138 @@ let rootUl = document.querySelector(`ul`);
 
 let baseUlr = `https://basic-todo-api.vercel.app/api/todo`;
 
+function handleDelete(id) {
+  fetch(baseUlr + `/${id}`, {
+    method: "DELETE", // *GET, POST, PUT, DELETE, etc.
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then(() => {
+    // console.log(`delete`, res);
+    displayTodos();
+  });
+}
+
+function handleToggle(id, status) {
+  let data = {
+    todo: {
+      isCompleted: !status,
+    },
+  };
+
+  fetch(baseUlr + `/${id}`, {
+    method: "PUT", // *GET, POST, PUT, DELETE, etc.
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  }).then(() => {
+    // console.log(`delete`, res);
+    displayTodos();
+  });
+}
+
+function handleEdit(e, id) {
+  let editBox = document.createElement(`input`);
+  editBox.value = e.target.innerText;
+  let p = e.target;
+  let parent = e.target.parentElement;
+  parent.replaceChild(editBox, p);
+  // console.log(input, p, parent);
+
+  editBox.addEventListener(`keyup`, e => {
+    if (e.keyCode === 13 && e.target.value.trim()) {
+      let data = {
+        todo: {
+          title: editBox.value,
+        },
+      };
+
+      fetch(baseUlr + `/${id}`, {
+        method: "PUT", // *GET, POST, PUT, DELETE, etc.
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data), // body data type must match "Content-Type" header
+      }).then(() => {
+        displayTodos();
+      });
+      parent.replaceChild(p, editBox);
+    }
+  });
+}
+
 function createUi(data) {
   rootUl.innerHTML = ``;
-  // console.log(data);
-
+  console.log(data);
   data.forEach((todo, i) => {
-    // console.log(todo);
+    console.log(todo);
     const dFrag = document.createDocumentFragment();
 
     let li = document.createElement(`li`);
     let checkParaBox = document.createElement(`div`);
     let checkbox = document.createElement(`input`);
-
+    checkbox.className = `checkBox`;
     checkbox.type = `checkbox`;
-    checkbox.checked = false;
+    checkbox.checked = todo.isCompleted;
+    checkbox.setAttribute(`data-id`, todo._id);
+    checkbox.addEventListener(`change`, () =>
+      handleToggle(todo._id, todo.isCompleted)
+    );
 
     let para = document.createElement(`p`);
 
     para.innerText = todo.title;
 
-    function handleEdit(e) {
-      let updated = e.target.parentElement;
-      updated.appendChild(input, p);
-      console.log(updated);
-    }
-
-    para.addEventListener(`dblclick`, handleEdit);
+    para.addEventListener(`dblclick`, event => handleEdit(event, todo._id));
 
     let close = document.createElement(`span`);
     close.className = `closeBtn`;
     close.innerText = `❌`;
+    close.addEventListener(`click`, () => handleDelete(todo._id));
 
     checkParaBox.append(checkbox, para);
     li.append(checkParaBox, close);
     dFrag.appendChild(li);
 
     rootUl.append(dFrag);
-
-    // handle delete function
-
-    function handleDelete(e) {
-      let deleted = data[i]._id;
-      console.log(data[i]._id);
-
-      fetch(baseUlr + `/${deleted}`, {
-        method: "DELETE", // *GET, POST, PUT, DELETE, etc.
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      createUi(data);
-    }
-    close.addEventListener(`click`, handleDelete);
   });
 }
 
-function handleInput(event) {
-  let inputValue = event.target.value;
-  if (event.keyCode === 13) {
+function displayTodos() {
+  fetch(baseUlr)
+    .then(res => res.json())
+    .then(todoData => {
+      let allTodo = todoData.todos;
+      createUi(allTodo);
+    });
+}
+
+function addTodo(e) {
+  let inputValue = e.target.value;
+
+  if (e.keyCode === 13 && inputValue.trim()) {
     // console.log(inputValue);
-
-    fetch(baseUlr)
-      .then(res => res.json())
-      .then(todoData => {
-        let allTodo = todoData.todos;
-        createUi(allTodo);
-      });
-
     let data = {
       todo: {
         title: `${inputValue}`,
         isCompleted: false,
       },
     };
+
     fetch(baseUlr, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data), // body data type must match "Content-Type" header
+    }).then(() => {
+      displayTodos();
+      e.target.value = ``;
     });
   }
 }
 
-inputBox.addEventListener(`keyup`, handleInput);
+inputBox.addEventListener(`keyup`, addTodo);
+
+displayTodos();

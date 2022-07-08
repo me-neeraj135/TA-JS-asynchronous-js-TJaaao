@@ -109,6 +109,8 @@ section {
 
 body {
   line-height: 1;
+  font-family: "Fira Sans";
+  background-color: #c6daea;
 }
 
 ol,
@@ -149,10 +151,6 @@ table {
   border: 2px solid blue;
 }
 
-.container ul {
-  border: 1px solid #740303;
-}
-
 .container ul li {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -182,13 +180,15 @@ table {
   font-size: 1.5rem;
 }
 
-.container ul li div input {
+.container ul li div .checkBox {
   margin: 0;
   width: 20px;
 }
 
 .container ul li div p {
-  font-size: 1rem;
+  color: #fbf7d5;
+  text-transform: capitalize;
+  font-size: 1.5rem;
   margin-left: 1rem;
 }
 
