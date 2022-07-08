@@ -1,0 +1,242 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+  background-color: rgb(64, 4, 104);
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* custom-style */
+
+main {
+  width: 60%;
+  margin: 1rem auto;
+  padding: 1rem;
+}
+
+header {
+  font-size: 2rem;
+  font-weight: 600;
+  color: white;
+  text-align: center;
+  padding: 1rem 0;
+}
+.modalWindow {
+  background-color: rgb(112, 153, 230);
+  display: none;
+  padding: 1rem;
+  margin: auto;
+}
+.closeList {
+  display: flex;
+  justify-content: space-between;
+}
+.modalClose {
+  border: 1px solid;
+}
+.modalClose:hover {
+  background-color: black;
+  color: white;
+}
+.root {
+  display: grid;
+  grid-template-columns: auto auto;
+  margin: auto;
+  height: 100vh;
+}
+.bookList {
+  background-color: rgb(216, 170, 253);
+  border: 1px dotted rgb(241, 33, 6);
+  text-align: center;
+  padding: 1rem;
+  color: rgb(64, 4, 104);
+}
+
+.charList {
+  padding: 1rem;
+  margin: 1rem 0;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 500;
+  border: 1px solid white;
+}
+.charList:hover {
+  color: yellow;
+  border: 1px solid yellow;
+  background-color: green;
+}
+
+h2 {
+  font-size: 1.5rem;
+  color: white;
+  font-weight: 700;
+}
+h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+p {
+  font-size: 1rem;
+  margin: 1rem 0;
+}
+.btn {
+  background-color: rgb(64, 4, 104);
+  color: white;
+  border: none;
+  outline: none;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  border-radius: 0.2rem;
+}
+
+@keyframes donut-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+}
+
+.donut {
+  display: inline-block;
+  border: 4px solid rgba(0, 0, 0, 0.993);
+  border-left-color: #7983ff;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: donut-spin 1.2s linear infinite;
+}
